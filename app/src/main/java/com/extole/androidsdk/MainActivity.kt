@@ -20,13 +20,21 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var extole: Extole
+    lateinit var extoleFuture: FutureTask<Extole>
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         GlobalScope.launch {
+            // example 1
+            val extole = initExtole(this@MainActivity)
+
+            // example 2
+            val extole2 = withContext(Dispatchers.IO) {
+                extoleFuture.get()
+            }
+
             val (zone, campaign) = extole.fetchZone("mobile_cta")
             runOnUiThread {
                 findViewById<Button>(R.id.menu_item).setText(
@@ -45,6 +53,16 @@ class MainActivity : AppCompatActivity() {
                     extole.sendEvent("deeplink", mapOf("extole_key" to "extole_value"))
                 }
             }
+        }
+    }
+
+    suspend fun initExtole(context: Context): Extole {
+        return withContext(Dispatchers.IO) {
+            return@withContext Extole.init(
+                context = context, appName = "extole-mobile-test", data = mapOf("version" to "1.0"),
+                sandbox = "prod-test", labels = setOf("business"),
+                listenToEvents = true
+            )
         }
     }
 }

@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.Executors
 import java.util.concurrent.FutureTask
 import javax.inject.Singleton
@@ -20,11 +21,16 @@ class Configuration {
     @Provides
     fun extole(@ApplicationContext context: Context): FutureTask<Extole> {
         val extoleFuture = FutureTask<Extole> {
-            Extole.init(
-                context = context, appName = "extole-mobile-test", data = mapOf("version" to "1.0"),
-                sandbox = "prod-test", labels = setOf("business"),
-                listenToEvents = true
-            )
+            runBlocking {
+                Extole.init(
+                    context = context,
+                    appName = "extole-mobile-test",
+                    data = mapOf("version" to "1.0"),
+                    sandbox = "prod-test",
+                    labels = setOf("business"),
+                    listenToEvents = true
+                )
+            }
         }
         threadPool.submit(extoleFuture)
         return extoleFuture

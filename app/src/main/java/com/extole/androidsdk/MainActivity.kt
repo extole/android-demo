@@ -27,11 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         GlobalScope.launch {
-            // example 1
-            val extole = initExtole(this@MainActivity)
-
-            // example 2
-            val extole2 = withContext(Dispatchers.IO) {
+            val extole = withContext(Dispatchers.IO) {
                 extoleFuture.get()
             }
 

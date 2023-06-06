@@ -58,7 +58,7 @@ android {
 
 dependencies {
 
-  implementation 'com.extole.mobile:android-sdk:1.0.44'
+  implementation 'com.extole.mobile:android-sdk:1.0.46'
   implementation 'com.squareup.picasso:picasso:2.71828'
   implementation 'androidx.appcompat:appcompat:1.5.1'
   implementation 'com.google.android.material:material:1.4.0'

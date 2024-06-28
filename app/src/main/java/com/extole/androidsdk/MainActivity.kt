@@ -1,6 +1,7 @@
 package com.extole.androidsdk
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
@@ -13,14 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.FutureTask
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var extoleFuture: FutureTask<Extole>
+    lateinit var extole: Extole
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +30,6 @@ class MainActivity : AppCompatActivity() {
             // example 1
             val extole = initExtole(this@MainActivity)
 
-            // example 2
-            val extole2 = withContext(Dispatchers.IO) {
-                extoleFuture.get()
-            }
-
             val (zone, campaign) = extole.fetchZone("mobile_cta")
             runOnUiThread {
                 findViewById<Button>(R.id.menu_item).setText(
@@ -43,7 +38,10 @@ class MainActivity : AppCompatActivity() {
 
                 findViewById<Button>(R.id.menu_item).setOnClickListener {
                     GlobalScope.launch {
-                        zone?.tap()
+                        GlobalScope.launch {
+                            val webViewIntent = Intent(this@MainActivity, ExtoleWebView::class.java)
+                            this@MainActivity.startActivity(webViewIntent)
+                        }
                     }
                 }
             }

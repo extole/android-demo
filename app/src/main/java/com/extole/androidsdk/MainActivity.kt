@@ -30,11 +30,6 @@ class MainActivity : AppCompatActivity() {
             // example 1
             val extole = initExtole(this@MainActivity)
 
-            // example 2
-            val extole2 = withContext(Dispatchers.IO) {
-                extoleFuture.get()
-            }
-
             val (zone, campaign) = extole.fetchZone("mobile_cta")
             runOnUiThread {
                 findViewById<Button>(R.id.menu_item).setText(

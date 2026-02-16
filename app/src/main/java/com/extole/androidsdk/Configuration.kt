@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class Configuration {
-    val threadPool = Executors.newFixedThreadPool(1);
+    val threadPool = Executors.newFixedThreadPool(1)
 
     @Singleton
     @Provides
@@ -29,5 +29,4 @@ class Configuration {
         threadPool.submit(extoleFuture)
         return extoleFuture
     }
-
 }

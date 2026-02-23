@@ -71,7 +71,7 @@ dependencies {
   kapt "com.google.dagger:hilt-compiler:2.57.2"
 
   testImplementation 'junit:junit:4.13.2'
-  androidTestImplementation 'androidx.test:runner:1.4.0'
+  androidTestImplementation 'androidx.test:runner:1.7.0'
   androidTestUtil 'androidx.test:orchestrator:1.4.1'
   androidTestImplementation 'androidx.test.ext:junit:1.1.3'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
